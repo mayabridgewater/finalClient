@@ -16,7 +16,6 @@ async function getGuesses(id) {
 }
 
 async function  uploadeGuesses(data) {
-    console.log(data)
     const success = await fetcher.put('/guess', data);
 }
 export {
