@@ -37,7 +37,7 @@ export default class NewGame extends React.Component {
     async handleSubmit(e) {
         e.preventDefault();
         const range = `${this.state.from}-${this.state.to}`
-        if (this.newPlayer) {
+        if (this.state.newPlayer) {
             const data = {range: range, first_name: this.state.first_name, last_name: this.state.last_name};
             const user = await startNewGame(data);
         }else {
@@ -49,13 +49,11 @@ export default class NewGame extends React.Component {
     
 
     render() {
-        console.log(Cookies.get('player'));
-        console.log(this.state)
         return (
             <div className='text-center'>
                 <h1>Welcome</h1>
                 <form onSubmit={this.handleSubmit}>
-                    {!this.state.first_name &&
+                    {!this.state.first_name && !this.state.last_name &&
                     <div>
                         <input type='text' name='first_name' placeholder='First Name' required onChange={this.onChange}></input>
                         <input type='text' name='last_name' placeholder='Last Name' onChange={this.onChange}></input>
