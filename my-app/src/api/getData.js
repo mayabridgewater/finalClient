@@ -17,7 +17,7 @@ async function getGuesses(id) {
 
 async function  uploadeGuesses(data) {
     const success = await fetcher.put('/guess', data);
-    return success
+    return success.data
 }
 
 async function getGameHistory(id) {

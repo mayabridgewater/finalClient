@@ -1,7 +1,7 @@
 import React from 'react';
 import Cookies from 'js-cookie';
 
-import {getRange, getGuesses, uploadeGuesses} from '../api/getData';
+import {getRange, getGuesses, uploadeGuesses, getGameHistory} from '../api/getData';
 import PlayerAnswer from './playerAnswer';
 import GameHistory from './gameHistory';
 
@@ -14,21 +14,29 @@ export default class Game extends React.Component {
             guess: '',
             guessed: [],
             strGuesses: '',
-            newGuess: false
+            newGuess: false,
+            history: []
         }
         this.generateGuess = this.generateGuess.bind(this);
         this.setGuess = this.setGuess.bind(this)
     }
 
     async componentDidMount() {
+        const player = JSON.parse(Cookies.get('player'));
+        const history = await getGameHistory(player.id);
         if(!this.state.from && !this.state.to) {
             const player = JSON.parse(Cookies.get('player'));
             let range = await getRange(player.id);
             const rangeArray = range[0].range.split('-');
             this.setState({
                 from: parseInt(rangeArray[0]),
-                to: parseInt(rangeArray[1])
+                to: parseInt(rangeArray[1]),
+                history
             }, this.generateGuess)
+        }else {
+            this.setState({
+                history
+            })
         }
     }
 
@@ -49,7 +57,6 @@ export default class Game extends React.Component {
     }
 
     async setGuess(guess) {
-        console.log(this.state.guessed)
        if (this.state.guessed.includes(guess.toString())) {
            this.setState({
                newGuess:true
@@ -58,11 +65,12 @@ export default class Game extends React.Component {
            let guesses = this.state.guessed;
            guesses.push(guess);
            const strGuesses = guesses.join(',');
+           const history = await uploadeGuesses({guess: strGuesses, id: JSON.parse(Cookies.get('player')).id})
            this.setState({
                guess: guess,
+               history
                
            })
-           const success = await uploadeGuesses({guess: strGuesses, id: JSON.parse(Cookies.get('player')).id})
        }
     }
 
@@ -79,12 +87,11 @@ export default class Game extends React.Component {
     }
 
     render() {
-        console.log('from ', this.state.from, 'to ', this.state.to)
         return (
             <div>
                 <h3>Computers Guess: {this.state.guess && this.state.guess}</h3>
                 <PlayerAnswer guess={this.state.guess} afterPlayer={this.afterPlayer}/>
-                <GameHistory/>
+                <GameHistory history={this.state.history}/>
             </div>
         )
     }
