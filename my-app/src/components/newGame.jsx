@@ -50,22 +50,24 @@ export default class NewGame extends React.Component {
 
     render() {
         return (
-            <div className='text-center'>
-                <h1>Welcome</h1>
-                <form onSubmit={this.handleSubmit}>
-                    {!this.state.first_name && !this.state.last_name &&
-                    <div>
-                        <input type='text' name='first_name' placeholder='First Name' required onChange={this.onChange}></input>
-                        <input type='text' name='last_name' placeholder='Last Name' onChange={this.onChange}></input>
-                    </div>
-                    }
-                    <label>Range</label>
-                    <label>From</label>
-                    <input type='number' name='from' required onChange={this.onChange}></input>
-                    <label>To</label>
-                    <input type='number' name='to' required onChange={this.onChange}></input>
-                    <input type='submit'></input>
-                </form>
+            <div className='text-center d-flex' style={{height: '80vh'}}>
+                <div style={{margin: 'auto'}} className='justify-content-center'>
+                    <h1 style={{color: 'green'}}>Welcome</h1>
+                    <form onSubmit={this.handleSubmit}>
+                        {!this.state.first_name && !this.state.last_name &&
+                        <div>
+                            <input type='text' name='first_name' placeholder='First Name' required onChange={this.onChange}></input>
+                            <input type='text' name='last_name' placeholder='Last Name' onChange={this.onChange}></input>
+                        </div>
+                        }
+                        <div style={{fontSize: '20px'}}>Range</div>
+                        <label>From</label>
+                        <input type='number' name='from' required onChange={this.onChange}></input>
+                        <label style={{paddingLeft: '10px'}}>To</label>
+                        <input type='number' name='to' required onChange={this.onChange}></input>
+                        <input type='submit' className='btn' style={{margin: '0 auto'}}></input>
+                    </form>
+                </div>
             </div>
         )
     }

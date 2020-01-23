@@ -47,14 +47,14 @@ export default class PlayerAnswer extends React.Component {
             <div>
                 {!this.state.win ? 
                 <div>
-                    <button onClick={() => this.handleClick('larger')}>My Number is Larger Than Your Guess</button>
-                    <button onClick={() => this.handleClick('smaller')}>My Number is Smaller Than Your Guess</button>
-                    <button onClick={this.winner}>Correct!</button>
+                    <button onClick={() => this.handleClick('larger')} className='btn'>My Number is Larger Than Your Guess</button>
+                    <button onClick={() => this.handleClick('smaller')} className='btn'>My Number is Smaller Than Your Guess</button>
+                    <button onClick={this.winner} className='btn'>Correct!</button>
                 </div>
                 :
                 <div>
-                    <button onClick={this.newGame}>Play Again?</button>
-                    <button onClick={this.newPlayer}>New Player</button>
+                    <button onClick={this.newGame} className='btn'>Play Again?</button>
+                    <button onClick={this.newPlayer} className='btn'>New Player</button>
                 </div>
                 }
             </div>

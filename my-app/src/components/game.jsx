@@ -88,10 +88,12 @@ export default class Game extends React.Component {
 
     render() {
         return (
-            <div>
-                <h3>Computers Guess: {this.state.guess && this.state.guess}</h3>
-                <PlayerAnswer guess={this.state.guess} afterPlayer={this.afterPlayer}/>
-                <GameHistory history={this.state.history}/>
+            <div className={'text-center d-flex'} style={{height: '100vh'}}>
+                <div style={{margin: 'auto'}} className='justify-content-center'>
+                    <h3 style={{color: 'green'}}>Computers Guess: {this.state.guess && this.state.guess}</h3>
+                    <PlayerAnswer guess={this.state.guess} afterPlayer={this.afterPlayer}/>
+                    <GameHistory history={this.state.history}/>
+                </div>
             </div>
         )
     }
