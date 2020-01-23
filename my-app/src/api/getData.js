@@ -17,10 +17,18 @@ async function getGuesses(id) {
 
 async function  uploadeGuesses(data) {
     const success = await fetcher.put('/guess', data);
+    return success
 }
+
+async function getGameHistory(id) {
+    const history = await fetcher.get('/history/${id');
+    return history.data
+}
+
 export {
     startNewGame,
     getRange,
     getGuesses,
-    uploadeGuesses
+    uploadeGuesses,
+    getGameHistory
 }

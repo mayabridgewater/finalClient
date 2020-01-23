@@ -3,6 +3,7 @@ import Cookies from 'js-cookie';
 
 import {getRange, getGuesses, uploadeGuesses} from '../api/getData';
 import PlayerAnswer from './playerAnswer';
+import GameHistory from './gameHistory';
 
 export default class Game extends React.Component {
     constructor(props) {
@@ -12,7 +13,8 @@ export default class Game extends React.Component {
             to: this.props.to,
             guess: '',
             guessed: [],
-            strGuesses: ''
+            strGuesses: '',
+            newGuess: false
         }
         this.generateGuess = this.generateGuess.bind(this);
         this.setGuess = this.setGuess.bind(this)
@@ -35,29 +37,31 @@ export default class Game extends React.Component {
         const guesses = await getGuesses(JSON.parse(Cookies.get('player')).id);
         if (!guesses[0].guesses) {
             this.setState({
+                newGuess: false,
                 guessed: []
             }, () => this.setGuess(guess))
         }else {
             this.setState({
+                newGuess: false,
                 guessed: guesses[0].guesses.split(',')
             }, () => this.setGuess(guess))
         }
     }
 
     async setGuess(guess) {
+        console.log(this.state.guessed)
        if (this.state.guessed.includes(guess.toString())) {
-           window.location.replace('/game')
+           this.setState({
+               newGuess:true
+           })
        } else {
-           console.log(this.state.guessed)
            let guesses = this.state.guessed;
            guesses.push(guess);
-           console.log(guesses)
            const strGuesses = guesses.join(',');
            this.setState({
                guess: guess,
                
            })
-           console.log(strGuesses);
            const success = await uploadeGuesses({guess: strGuesses, id: JSON.parse(Cookies.get('player')).id})
        }
     }
@@ -75,10 +79,12 @@ export default class Game extends React.Component {
     }
 
     render() {
+        console.log('from ', this.state.from, 'to ', this.state.to)
         return (
             <div>
                 <h3>Computers Guess: {this.state.guess && this.state.guess}</h3>
                 <PlayerAnswer guess={this.state.guess} afterPlayer={this.afterPlayer}/>
+                <GameHistory/>
             </div>
         )
     }
