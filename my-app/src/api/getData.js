@@ -9,7 +9,19 @@ async function getRange(id) {
     const results = await fetcher.get(`/range/${id}`);
     return results.data
 }
+
+async function getGuesses(id) {
+    const guesses = await fetcher.get(`/guess/${id}`);
+    return guesses.data
+}
+
+async function  uploadeGuesses(data) {
+    console.log(data)
+    const success = await fetcher.put('/guess', data);
+}
 export {
     startNewGame,
-    getRange
+    getRange,
+    getGuesses,
+    uploadeGuesses
 }
