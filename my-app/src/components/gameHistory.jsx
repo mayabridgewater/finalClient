@@ -24,8 +24,8 @@ export default class GameHistory extends React.Component {
             <div>
                 {this.state.player &&
                 <div>
-                    <h3>Player Name</h3>
-                    <p>{player.first_name} {player.last_name}</p>
+                    <h3 style={{color: 'rgb(47, 109, 47)'}}>Player Name</h3>
+                    <p style={{fontSize: '20px'}}>{player.first_name} {player.last_name}</p>
             
                     <div className='row'>
                         {this.props.history.map((game, g) => <GameDetails {...game} key={g}/>)}
