@@ -21,8 +21,13 @@ async function  uploadeGuesses(data) {
 }
 
 async function getGameHistory(id) {
-    const history = await fetcher.get('/history/${id');
+    const history = await fetcher.get(`/history/${id}`);
     return history.data
+}
+
+async function addWin(data) {
+    const success = await fetcher.put('/win', data);
+    return success
 }
 
 export {
@@ -30,5 +35,6 @@ export {
     getRange,
     getGuesses,
     uploadeGuesses,
-    getGameHistory
+    getGameHistory,
+    addWin
 }

@@ -1,6 +1,8 @@
 import React from 'react';
 import Cookies from 'js-cookie';
 
+import {addWin} from '../api/getData';
+
 export default class PlayerAnswer extends React.Component {
     constructor(props) {
         super(props);
@@ -24,10 +26,11 @@ export default class PlayerAnswer extends React.Component {
         }
     }
 
-    winner() {
+    async winner() {
+        await addWin({win: this.props.guess, id: JSON.parse(Cookies.get('player')).id});
         this.setState({
             win: true
-        })
+        });
     }
 
     newGame() {
@@ -40,7 +43,6 @@ export default class PlayerAnswer extends React.Component {
     }
 
     render() {
-        console.log(this.props.guess)
         return (
             <div>
                 {!this.state.win ? 
